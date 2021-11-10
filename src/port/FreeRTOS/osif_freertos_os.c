@@ -71,7 +71,7 @@
 
 /**
  * @brief           Start OS kernel scheduler
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_KernelStart(void)
 {
@@ -85,7 +85,7 @@ OSIF_RESULT OSIF_KernelStart(void)
 
 /**
  * @brief           Suspend OS kernel scheduler
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_KernelSuspend(void)
 {
@@ -99,7 +99,7 @@ OSIF_RESULT OSIF_KernelSuspend(void)
 
 /**
  * @brief           Resume execution of suspended OS kernel scheduler
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_KernelResume(void)
 {
@@ -201,7 +201,7 @@ void OSIF_DelayUntil(uint32_t *prev_wake_time, uint32_t ms)
  * @param[in]       arg: Thread function argument
  * @param[in]       stack_sz: Size of thread stack in uints of bytes. If set to 0, reserve default stack size
  * @param[in]       prio: Thread priority
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN thread_fn, void * const arg, size_t stack_sz, OSIF_THREAD_PRIO prio)
 {
@@ -224,7 +224,7 @@ OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN t
 /**
  * @brief           Suspend thread routine execution
  * @param[in]       t: Pointer to thread handle to suspend
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadSuspend(OSIF_THREAD *t)
 {
@@ -243,7 +243,7 @@ OSIF_RESULT OSIF_ThreadSuspend(OSIF_THREAD *t)
 /**
  * @brief           Resume thread routine execution
  * @param[in]       t: Pointer to thread handle to resume
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadResume(OSIF_THREAD *t)
 {
@@ -269,7 +269,7 @@ OSIF_RESULT OSIF_ThreadResume(OSIF_THREAD *t)
  * @brief           Get thread ID of the currently running thread
  * @param[out]      t: Pointer to thread handle that will store the thread ID
  *                      of the currently running thread
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadGetId(OSIF_THREAD *t)
 {
@@ -289,7 +289,7 @@ OSIF_RESULT OSIF_ThreadGetId(OSIF_THREAD *t)
  * @brief           Terminate thread (shut it down and remove)
  * @param[in]       t: Pointer to thread handle to terminate.
  *                      If set to `NULL`, terminate current thread (thread from where function is called)
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadTerminate(OSIF_THREAD *t)
 {
@@ -303,7 +303,7 @@ OSIF_RESULT OSIF_ThreadTerminate(OSIF_THREAD *t)
 
 /**
  * @brief           Yield current thread
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadYield(void)
 {
@@ -320,7 +320,7 @@ OSIF_RESULT OSIF_ThreadYield(void)
  * @brief           Get priority of an active thread
  * @param[in]       t: Pointer to thread identifier
  * @param[out]      prio: Pointer to variable to save priority value
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadGetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO *prio)
 {
@@ -340,7 +340,7 @@ OSIF_RESULT OSIF_ThreadGetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO *prio)
  * @brief           Change priority of an active thread
  * @param[in]       t: Pointer to thread identifier
  * @param[out]      prio: New priority value
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO prio)
 {
@@ -360,7 +360,7 @@ OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO prio)
  * @brief           Send the specified Thread Signal to the target thread
  * @param[in]       t: Pointer to thread identifier
  * @param[in]       signal: Signal of the target thread that shall be send
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD *t, uint32_t signal)
 {
@@ -375,7 +375,7 @@ OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD *t, uint32_t signal)
 /**
  * @brief           Get the current Thread Signal of current running thread
  * @param[out]      signal: Pointer to current Thread Signal
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadGetSignal(uint32_t *signal)
 {
@@ -393,7 +393,7 @@ OSIF_RESULT OSIF_ThreadGetSignal(uint32_t *signal)
  * @param[out]      signal: Pointer to thread signal to receive
  * @param[in]       timeout_ms: Maximum timeout to wait for Thread Signal.
  *                      When `OSIF_MAX_DELAY` is passed, wait for unlimited time
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t *signal, uint32_t timeout_ms)
 {
@@ -408,7 +408,7 @@ OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t *signal, uint32_t timeout_ms)
 /**
  * @brief           Clear the specified Thread Signal of current running thread
  * @param[in]       signal: Signal of the thread that shall be cleared
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_ThreadClearSignal(uint32_t signal)
 {
@@ -444,7 +444,7 @@ size_t OSIF_ThreadPeekFreeStackSize(OSIF_THREAD *t)
  * @param[in]       name: Name of a new message queue
  * @param[in]       msg_len: Number of entries for message queue to hold
  * @param[in]       item_sz: Number of bytes each item in the message queue
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size_t item_sz)
 {
@@ -471,7 +471,7 @@ OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size
 /**
  * @brief           Delete message queue
  * @param[in]       b: Pointer to message queue structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX *b)
 {
@@ -647,7 +647,7 @@ uint32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
 /**
  * @brief           Reset a message queue to its empty state
  * @param[in]       b: Pointer to message queue structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MboxReset(OSIF_MBOX *b)
 {
@@ -668,7 +668,7 @@ OSIF_RESULT OSIF_MboxReset(OSIF_MBOX *b)
 /**
  * @brief           Check if message queue is valid
  * @param[in]       b: Pointer to message queue structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MboxIsValid(OSIF_MBOX *b)
 {
@@ -681,7 +681,7 @@ OSIF_RESULT OSIF_MboxIsValid(OSIF_MBOX *b)
 /**
  * @brief           Set message queue structure as invalid
  * @param[in]       b: Pointer to message queue structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MboxInvalid(OSIF_MBOX *b)
 {
@@ -698,7 +698,7 @@ OSIF_RESULT OSIF_MboxInvalid(OSIF_MBOX *b)
  * @note            Recursive mutex has to be created as it may be locked multiple times before unlocked
  * @param[in]       name: Name of a new recursive mutex (can be anything in this port)
  * @param[out]      p: Pointer to mutex structure to allocate
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX *p, const char *name)
 {
@@ -726,7 +726,7 @@ OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX *p, const char *name)
 /**
  * @brief           Delete recursive mutex from system
  * @param[in]       p: Pointer to mutex structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX *p)
 {
@@ -741,7 +741,7 @@ OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX *p)
 /**
  * @brief           Lock recursive mutex, wait forever to lock
  * @param[in]       p: Pointer to mutex structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX *p)
 {
@@ -758,7 +758,7 @@ OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX *p)
 /**
  * @brief           Unlock recursive mutex
  * @param[in]       p: Pointer to mutex structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MutexUnlock(OSIF_MUTEX *p)
 {
@@ -775,7 +775,7 @@ OSIF_RESULT OSIF_MutexUnlock(OSIF_MUTEX *p)
 /**
  * @brief           Check if mutex structure is valid
  * @param[in]       p: Pointer to mutex structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MutexIsValid(OSIF_MUTEX *p)
 {
@@ -788,7 +788,7 @@ OSIF_RESULT OSIF_MutexIsValid(OSIF_MUTEX *p)
 /**
  * @brief           Set recursive mutex structure as invalid
  * @param[in]       p: Pointer to mutex structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX *p)
 {
@@ -808,7 +808,7 @@ OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX *p)
  * @param[in]       cnt: Count indicating default semaphore state:
  *                     `0`: Take semaphore token immediately
  *                     `1`: Keep token available
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cnt)
 {
@@ -844,7 +844,7 @@ OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cn
 /**
  * @brief           Delete binary semaphore
  * @param[in]       p: Pointer to semaphore structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_SemaphoreDelete(OSIF_SEMAPHORE *p)
 {
@@ -893,7 +893,7 @@ uint32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms)
 /**
  * @brief           Release semaphore
  * @param[in]       p: Pointer to semaphore structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_SemaphoreRelease(OSIF_SEMAPHORE *p)
 {
@@ -920,7 +920,7 @@ OSIF_RESULT OSIF_SemaphoreRelease(OSIF_SEMAPHORE *p)
 /**
  * @brief           Check if semaphore is valid
  * @param[in]       p: Pointer to semaphore structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_SemaphoreIsValid(OSIF_SEMAPHORE *p)
 {
@@ -933,7 +933,7 @@ OSIF_RESULT OSIF_SemaphoreIsValid(OSIF_SEMAPHORE *p)
 /**
  * @brief           Set semaphore structure as invalid
  * @param[in]       p: Pointer to semaphore structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_SemaphoreInvalid(OSIF_SEMAPHORE *p)
 {
@@ -951,10 +951,10 @@ OSIF_RESULT OSIF_SemaphoreInvalid(OSIF_SEMAPHORE *p)
                     p: Pointer to timer structure if create was successful.
  * @param[in]       tim_fn: Timer callback function invoked when timer underflow
  * @param[in]       arg: Timer function argument
- * @param[in]       reload: `true` if periodic timer, `false` if one-shot timer
- * @return          `true` on success, `false` otherwise
+ * @param[in]       reload: `1` if periodic timer, `0` if one-shot timer
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_fn, void * const arg, bool reload)
+OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_fn, void * const arg, uint8_t reload)
 {
     if (p == NULL || tim_fn == NULL) {
         return (osifERR_PARAM);
@@ -971,7 +971,7 @@ OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_
 /**
  * @brief           Delete RTOS software timer
  * @param[in]       p: Pointer to timer structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerDelete(OSIF_TIMER *p)
 {
@@ -987,7 +987,7 @@ OSIF_RESULT OSIF_TimerDelete(OSIF_TIMER *p)
  * @brief           Start RTOS software timer
  * @param[in]       p: Pointer to timer structure
  * @param[in]       period_ms: time interval value of the timer in milliseconds
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerStart(OSIF_TIMER *p, uint32_t period_ms)
 {
@@ -1019,7 +1019,7 @@ OSIF_RESULT OSIF_TimerStart(OSIF_TIMER *p, uint32_t period_ms)
 /**
  * @brief           Stop RTOS software timer
  * @param[in]       p: Pointer to timer structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerStop(OSIF_TIMER *p)
 {
@@ -1047,7 +1047,7 @@ OSIF_RESULT OSIF_TimerStop(OSIF_TIMER *p)
  * @brief           Restart RTOS software timer with new period
  * @param[in]       p: Pointer to timer structure
  * @param[in]       period_ms: New time interval value in milliseconds
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER *p, uint32_t period_ms)
 {
@@ -1061,7 +1061,7 @@ OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER *p, uint32_t period_ms)
  * @brief           Get RTOS software timer ID
  * @param[in]       p: Pointer to timer structure
  * @param[out]      p_timer_id: Pointer to ID value
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER *p, uint32_t *p_timer_id)
 {
@@ -1080,7 +1080,7 @@ OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER *p, uint32_t *p_timer_id)
 /**
  * @brief           Check if software timer is valid
  * @param[in]       p: Pointer to timer structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerIsValid(OSIF_TIMER *p)
 {
@@ -1093,7 +1093,7 @@ OSIF_RESULT OSIF_TimerIsValid(OSIF_TIMER *p)
 /**
  * @brief           Set timer structure as invalid
  * @param[in]       p: Pointer to timer structure
- * @return          `true` on success, `false` otherwise
+ * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_TimerInvalid(OSIF_TIMER *p)
 {
