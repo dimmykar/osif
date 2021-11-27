@@ -215,7 +215,7 @@ OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN t
         *t = id;
     }
 
-    return (id != NULL ? osifOK : osifERR);
+    return (id != NULL ? osifOK : osifERR_MEM);
 }
 /*============================================================================*/
 
@@ -461,7 +461,7 @@ OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size
 
         return (osifOK);
     } else {
-        return (osifERR);
+        return (osifERR_MEM);
     }
 }
 /*============================================================================*/
@@ -498,7 +498,7 @@ OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX *b)
 int32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
-        return (0);
+        return (osifERR_PARAM);
     }
 
     BaseType_t res = pdFALSE;
@@ -535,7 +535,7 @@ int32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 int32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
-        return (0);
+        return (osifERR_PARAM);
     }
 
     BaseType_t res = pdFALSE;
@@ -572,7 +572,7 @@ int32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 int32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
-        return (0);
+        return (osifERR_PARAM);
     }
 
     BaseType_t res = pdFALSE;
@@ -602,7 +602,7 @@ int32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX *b)
 {
     if (b == NULL || *b == NULL) {
-        return (0);
+        return (osifERR_PARAM);
     }
 
     uint32_t num = 0;
@@ -627,7 +627,7 @@ uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX *b)
 int32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
 {
     if (b == NULL || *b == NULL) {
-        return (0);
+        return (osifERR_PARAM);
     }
 
     uint32_t num = 0;
@@ -716,7 +716,7 @@ OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX *p, const char *name)
 
         return (osifOK);
     } else {
-        return (osifERR);
+        return (osifERR_MEM);
     }
 }
 /*============================================================================*/
@@ -834,7 +834,7 @@ OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cn
 
         return (osifOK);
     } else {
-        return (osifERR);
+        return (osifERR_MEM);
     }
 }
 /*============================================================================*/
@@ -962,7 +962,7 @@ OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_
 
     *p = xTimerCreate((const char *)name, 1, (BaseType_t)reload, arg, (TimerCallbackFunction_t)tim_fn);
 
-    return (*p != NULL ? osifOK : osifERR);
+    return (*p != NULL ? osifOK : osifERR_MEM);
 }
 /*============================================================================*/
 
