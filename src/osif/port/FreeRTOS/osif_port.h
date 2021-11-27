@@ -130,14 +130,6 @@ typedef TimerHandle_t               OSIF_TIMER;
 #define OSIF_TIMER_NULL             ((OSIF_TIMER)0)
 
 /**
- * @brief           OSIF timeout value
- *
- * Value returned by operating system functions (mutex wait, sem wait, mbox wait)
- * when it returns timeout and does not give valid value to application
- */
-#define OSIF_TIMEOUT                ((uint32_t)portMAX_DELAY)
-
-/**
  * @brief           OSIF maximum delay value
  *
  *

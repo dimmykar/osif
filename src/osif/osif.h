@@ -146,11 +146,11 @@ size_t         OSIF_ThreadPeekFreeStackSize(OSIF_THREAD *t);
 OSIF_RESULT    OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size_t item_sz);
 OSIF_RESULT    OSIF_MboxDelete(OSIF_MBOX *b);
 
-uint32_t       OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
-uint32_t       OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
-uint32_t       OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
+int32_t        OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
+int32_t        OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
+int32_t        OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
 uint32_t       OSIF_MboxMessagesWaiting(OSIF_MBOX *b);
-uint32_t       OSIF_MboxSpacesAvailable(OSIF_MBOX *b);
+int32_t        OSIF_MboxSpacesAvailable(OSIF_MBOX *b);
 OSIF_RESULT    OSIF_MboxReset(OSIF_MBOX *b);
 
 OSIF_RESULT    OSIF_MboxIsValid(OSIF_MBOX *b);
@@ -186,7 +186,7 @@ OSIF_RESULT    OSIF_MutexInvalid(OSIF_MUTEX *p);
 OSIF_RESULT    OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cnt);
 OSIF_RESULT    OSIF_SemaphoreDelete(OSIF_SEMAPHORE *p);
 
-uint32_t       OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms);
+int32_t        OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms);
 OSIF_RESULT    OSIF_SemaphoreRelease(OSIF_SEMAPHORE *p);
 
 OSIF_RESULT    OSIF_SemaphoreIsValid(OSIF_SEMAPHORE *p);

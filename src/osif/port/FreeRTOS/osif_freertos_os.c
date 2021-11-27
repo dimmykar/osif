@@ -495,7 +495,7 @@ OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX *b)
  *                      When `OSIF_MAX_DELAY` is passed, wait for unlimited time
  * @return          Time in units of milliseconds needed to put a message to queue
  */
-uint32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
+int32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
         return (0);
@@ -514,9 +514,9 @@ uint32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
     }
 
     if (res == pdTRUE) {
-        return ((uint32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
+        return ((int32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
     } else {
-        return (OSIF_TIMEOUT);
+        return (osifERR_TIMEOUT);
     }
 }
 /*============================================================================*/
@@ -530,9 +530,9 @@ uint32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
  * @param[in]       timeout_ms: Maximum timeout to wait for new message. When `OSIF_MAX_DELAY` is passed,
  *                      wait for unlimited time
  * @return          Time in units of milliseconds needed to get a message to queue
- *                      or @ref OSIF_TIMEOUT if it was not successful
+ *                      or @ref osifERR_TIMEOUT if it was not successful
  */
-uint32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
+int32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
         return (0);
@@ -551,9 +551,9 @@ uint32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
     }
 
     if (res == pdTRUE) {
-        return ((uint32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
+        return ((int32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
     } else {
-        return (OSIF_TIMEOUT);
+        return (osifERR_TIMEOUT);
     }
 }
 /*============================================================================*/
@@ -567,9 +567,9 @@ uint32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
  * @param[in]       timeout_ms: Maximum timeout to wait for new message. When `OSIF_MAX_DELAY` is passed,
  *                      wait for unlimited time
  * @return          Time in units of milliseconds needed to peek a message from queue
- *                      or @ref OSIF_TIMEOUT if it was not successful
+ *                      or @ref osifERR_TIMEOUT if it was not successful
  */
-uint32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
+int32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
         return (0);
@@ -585,9 +585,9 @@ uint32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
     }
 
     if (res == pdTRUE) {
-        return ((uint32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
+        return ((int32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
     } else {
-        return (OSIF_TIMEOUT);
+        return (osifERR_TIMEOUT);
     }
 }
 /*============================================================================*/
@@ -624,7 +624,7 @@ uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX *b)
  * @param[in]       b: Pointer to message queue structure
  * @return          The number of spaces available in the message queue
  */
-uint32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
+int32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
 {
     if (b == NULL || *b == NULL) {
         return (0);
@@ -633,7 +633,7 @@ uint32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
     uint32_t num = 0;
 
     if (IS_IN_HANDLER_MODE()) {
-        num = 0;  // TODO FreeRTOS hasn't uxQueueSpacesAvailableFromISR function
+        return (osifERR_ISR);  // TODO FreeRTOS hasn't uxQueueSpacesAvailableFromISR function
     } else {
         num = (uint32_t)uxQueueSpacesAvailable(*b);
     }
@@ -861,9 +861,9 @@ OSIF_RESULT OSIF_SemaphoreDelete(OSIF_SEMAPHORE *p)
  * @param[in]       p: Pointer to semaphore structure
  * @param[in]       timeout: Timeout to wait in milliseconds. When `0` is passed, wait forever
  * @return          Number of milliseconds waited for semaphore to become available or
- *                      @ref OSIF_TIMEOUT if not available within given time
+ *                      @ref osifERR_TIMEOUT if not available within given time
  */
-uint32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms)
+int32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -883,7 +883,7 @@ uint32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms)
     if (res == pdTRUE) {
         return ((uint32_t)((OSIF_GetSysTicks() - tick) / portTICK_PERIOD_MS));
     } else {
-        return (OSIF_TIMEOUT);
+        return (osifERR_TIMEOUT);
     }
 }
 /*============================================================================*/
