@@ -33,11 +33,6 @@
 #define _OSIF_PORT_H_INCLUDED_
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-
 /*============================================================================*
  *                                  Includes
  *============================================================================*/
@@ -56,8 +51,13 @@ extern "C" {
 #include "timers.h"
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
 /*============================================================================*
- *                               Public defines
+ *                           Public defines & types
  *============================================================================*/
 /**
  * @brief           OSIF thread ID type
@@ -162,7 +162,7 @@ typedef TimerHandle_t               OSIF_TIMER;
 
 
 /*============================================================================*
- *                              Public variables
+ *                                Public data
  *============================================================================*/
 
 
@@ -175,14 +175,15 @@ typedef TimerHandle_t               OSIF_TIMER;
 
 /*============================================================================*/
 
-/**
- * @}
- */ /* End of addtogroup OSIF */
-
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+
+/**
+ * @}
+ */ /* End of addtogroup OSIF */
 
 
 #endif /* _OSIF_PORT_H_INCLUDED_ */
