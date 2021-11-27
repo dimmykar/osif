@@ -61,13 +61,13 @@ extern "C" {
  */
 typedef enum
 {
-    osifOK                  = 0x00U,           /*!< Operation completed successfully */
-    osifERR                 = 0x01U,           /*!< Unspecified RTOS error: run-time error but no other error message fits */
-    osifERR_PARAM           = 0x02U,           /*!< Parameter error */
-    osifERR_MEM             = 0x03U,           /*!< System is out of memory: it was imposifsible to allocate or reserve memory for the operation */
-    osifERR_TIMEOUT         = 0x04U,           /*!< Operation not completed within the timeout period */
-    osifERR_RESOURCE        = 0x05U,           /*!< Resource not available */
-    osifERR_ISR             = 0x06U,           /*!< Not allowed in ISR context: the function cannot be called from interrupt service routines */
+    osifOK                  =  0,              /*!< Operation completed successfully */
+    osifERR                 = -1,              /*!< Unspecified RTOS error: run-time error but no other error message fits */
+    osifERR_PARAM           = -2,              /*!< Parameter error */
+    osifERR_MEM             = -3,              /*!< System is out of memory: it was imposifsible to allocate or reserve memory for the operation */
+    osifERR_TIMEOUT         = -4,              /*!< Operation not completed within the timeout period */
+    osifERR_RESOURCE        = -5,              /*!< Resource not available */
+    osifERR_ISR             = -6,              /*!< Not allowed in ISR context: the function cannot be called from interrupt service routines */
 } OSIF_RESULT;
 
 /**
