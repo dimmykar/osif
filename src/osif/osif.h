@@ -73,12 +73,12 @@ typedef enum
 /**
  * @brief           Thread function prototype
  */
-typedef void (*OSIF_THREAD_FN)(void *);
+typedef void (*OSIF_THREAD_FN)(void*);
 
 /**
  * @brief           RTOS software timer callback function prototype
  */
-typedef void (*OSIF_TIMER_FN)(const void *);
+typedef void (*OSIF_TIMER_FN)(const void*);
 
 
 /*============================================================================*
@@ -100,11 +100,11 @@ OSIF_RESULT    OSIF_KernelSuspend(void);
 OSIF_RESULT    OSIF_KernelResume(void);
 
 uint32_t       OSIF_KernelLock(void);
-void           OSIF_KernelUnlock(uint32_t *flags);
+void           OSIF_KernelUnlock(uint32_t* flags);
 
 uint32_t       OSIF_GetSysTicks(void);
 void           OSIF_Delay(uint32_t ms);
-void           OSIF_DelayUntil(uint32_t *prev_wake_time, uint32_t ms);
+void           OSIF_DelayUntil(uint32_t* prev_wake_time, uint32_t ms);
 
 /**
  * @}
@@ -115,24 +115,24 @@ void           OSIF_DelayUntil(uint32_t *prev_wake_time, uint32_t ms);
  * @name            Threads
  */
 
-OSIF_RESULT    OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN thread_fn, void * const arg, size_t stack_sz, OSIF_THREAD_PRIO prio);
-OSIF_RESULT    OSIF_ThreadSuspend(OSIF_THREAD *t);
-OSIF_RESULT    OSIF_ThreadResume(OSIF_THREAD *t);
+OSIF_RESULT    OSIF_ThreadCreate(OSIF_THREAD* t, const char* name, OSIF_THREAD_FN thread_fn, void* const arg, size_t stack_sz, OSIF_THREAD_PRIO prio);
+OSIF_RESULT    OSIF_ThreadSuspend(OSIF_THREAD* t);
+OSIF_RESULT    OSIF_ThreadResume(OSIF_THREAD* t);
 
-OSIF_RESULT    OSIF_ThreadGetId(OSIF_THREAD *t);
+OSIF_RESULT    OSIF_ThreadGetId(OSIF_THREAD* t);
 
-OSIF_RESULT    OSIF_ThreadTerminate(OSIF_THREAD *t);
+OSIF_RESULT    OSIF_ThreadTerminate(OSIF_THREAD* t);
 OSIF_RESULT    OSIF_ThreadYield(void);
 
-OSIF_RESULT    OSIF_ThreadGetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO *prio);
-OSIF_RESULT    OSIF_ThreadSetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO prio);
+OSIF_RESULT    OSIF_ThreadGetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO* prio);
+OSIF_RESULT    OSIF_ThreadSetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO prio);
 
-OSIF_RESULT    OSIF_ThreadSendSignal(OSIF_THREAD *t, uint32_t signal);
-OSIF_RESULT    OSIF_ThreadGetSignal(uint32_t *signal);
-OSIF_RESULT    OSIF_ThreadRecvSignal(uint32_t *signal, uint32_t timeout_ms);
+OSIF_RESULT    OSIF_ThreadSendSignal(OSIF_THREAD* t, uint32_t signal);
+OSIF_RESULT    OSIF_ThreadGetSignal(uint32_t* signal);
+OSIF_RESULT    OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t timeout_ms);
 OSIF_RESULT    OSIF_ThreadClearSignal(uint32_t signal);
 
-size_t         OSIF_ThreadPeekFreeStackSize(OSIF_THREAD *t);
+size_t         OSIF_ThreadPeekFreeStackSize(OSIF_THREAD* t);
 
 /**
  * @}
@@ -143,18 +143,18 @@ size_t         OSIF_ThreadPeekFreeStackSize(OSIF_THREAD *t);
  * @name            Message queues
  */
 
-OSIF_RESULT    OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size_t item_sz);
-OSIF_RESULT    OSIF_MboxDelete(OSIF_MBOX *b);
+OSIF_RESULT    OSIF_MboxCreate(OSIF_MBOX* b, const char* name, size_t msg_len, size_t item_sz);
+OSIF_RESULT    OSIF_MboxDelete(OSIF_MBOX* b);
 
-int32_t        OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
-int32_t        OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
-int32_t        OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms);
-uint32_t       OSIF_MboxMessagesWaiting(OSIF_MBOX *b);
-int32_t        OSIF_MboxSpacesAvailable(OSIF_MBOX *b);
-OSIF_RESULT    OSIF_MboxReset(OSIF_MBOX *b);
+int32_t        OSIF_MboxPut(OSIF_MBOX* b, void* m, uint32_t timeout_ms);
+int32_t        OSIF_MboxGet(OSIF_MBOX* b, void* m, uint32_t timeout_ms);
+int32_t        OSIF_MboxPeek(OSIF_MBOX* b, void* m, uint32_t timeout_ms);
+uint32_t       OSIF_MboxMessagesWaiting(OSIF_MBOX* b);
+int32_t        OSIF_MboxSpacesAvailable(OSIF_MBOX* b);
+OSIF_RESULT    OSIF_MboxReset(OSIF_MBOX* b);
 
-OSIF_RESULT    OSIF_MboxIsValid(OSIF_MBOX *b);
-OSIF_RESULT    OSIF_MboxInvalid(OSIF_MBOX *b);
+OSIF_RESULT    OSIF_MboxIsValid(OSIF_MBOX* b);
+OSIF_RESULT    OSIF_MboxInvalid(OSIF_MBOX* b);
 
 /**
  * @}
@@ -165,14 +165,14 @@ OSIF_RESULT    OSIF_MboxInvalid(OSIF_MBOX *b);
  * @name            Mutex
  */
 
-OSIF_RESULT    OSIF_MutexCreate(OSIF_MUTEX *p, const char *name);
-OSIF_RESULT    OSIF_MutexDelete(OSIF_MUTEX *p);
+OSIF_RESULT    OSIF_MutexCreate(OSIF_MUTEX* p, const char* name);
+OSIF_RESULT    OSIF_MutexDelete(OSIF_MUTEX* p);
 
-OSIF_RESULT    OSIF_MutexLock(OSIF_MUTEX *p);
-OSIF_RESULT    OSIF_MutexUnlock(OSIF_MUTEX *p);
+OSIF_RESULT    OSIF_MutexLock(OSIF_MUTEX* p);
+OSIF_RESULT    OSIF_MutexUnlock(OSIF_MUTEX* p);
 
-OSIF_RESULT    OSIF_MutexIsValid(OSIF_MUTEX *p);
-OSIF_RESULT    OSIF_MutexInvalid(OSIF_MUTEX *p);
+OSIF_RESULT    OSIF_MutexIsValid(OSIF_MUTEX* p);
+OSIF_RESULT    OSIF_MutexInvalid(OSIF_MUTEX* p);
 
 /**
  * @}
@@ -183,14 +183,14 @@ OSIF_RESULT    OSIF_MutexInvalid(OSIF_MUTEX *p);
  * @name            Semaphores
  */
 
-OSIF_RESULT    OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cnt);
-OSIF_RESULT    OSIF_SemaphoreDelete(OSIF_SEMAPHORE *p);
+OSIF_RESULT    OSIF_SemaphoreCreate(OSIF_SEMAPHORE* p, const char* name, uint8_t cnt);
+OSIF_RESULT    OSIF_SemaphoreDelete(OSIF_SEMAPHORE* p);
 
-int32_t        OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms);
-OSIF_RESULT    OSIF_SemaphoreRelease(OSIF_SEMAPHORE *p);
+int32_t        OSIF_SemaphoreWait(OSIF_SEMAPHORE* p, uint32_t timeout_ms);
+OSIF_RESULT    OSIF_SemaphoreRelease(OSIF_SEMAPHORE* p);
 
-OSIF_RESULT    OSIF_SemaphoreIsValid(OSIF_SEMAPHORE *p);
-OSIF_RESULT    OSIF_SemaphoreInvalid(OSIF_SEMAPHORE *p);
+OSIF_RESULT    OSIF_SemaphoreIsValid(OSIF_SEMAPHORE* p);
+OSIF_RESULT    OSIF_SemaphoreInvalid(OSIF_SEMAPHORE* p);
 
 /**
  * @}
@@ -201,16 +201,16 @@ OSIF_RESULT    OSIF_SemaphoreInvalid(OSIF_SEMAPHORE *p);
  * @name            OS Software times
  */
 
-OSIF_RESULT    OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_fn, void * const arg, uint8_t reload);
-OSIF_RESULT    OSIF_TimerDelete(OSIF_TIMER *p);
+OSIF_RESULT    OSIF_TimerCreate(OSIF_TIMER* p, const char* name, OSIF_TIMER_FN tim_fn, void* const arg, uint8_t reload);
+OSIF_RESULT    OSIF_TimerDelete(OSIF_TIMER* p);
 
-OSIF_RESULT    OSIF_TimerStart(OSIF_TIMER *p, uint32_t period_ms);
-OSIF_RESULT    OSIF_TimerStop(OSIF_TIMER *p);
-OSIF_RESULT    OSIF_TimerRestart(OSIF_TIMER *p, uint32_t period_ms);
-OSIF_RESULT    OSIF_TimerGetId(OSIF_TIMER *p, uint32_t *p_timer_id);
+OSIF_RESULT    OSIF_TimerStart(OSIF_TIMER* p, uint32_t period_ms);
+OSIF_RESULT    OSIF_TimerStop(OSIF_TIMER* p);
+OSIF_RESULT    OSIF_TimerRestart(OSIF_TIMER* p, uint32_t period_ms);
+OSIF_RESULT    OSIF_TimerGetId(OSIF_TIMER* p, uint32_t* p_timer_id);
 
-OSIF_RESULT    OSIF_TimerIsValid(OSIF_TIMER *p);
-OSIF_RESULT    OSIF_TimerInvalid(OSIF_TIMER *p);
+OSIF_RESULT    OSIF_TimerIsValid(OSIF_TIMER* p);
+OSIF_RESULT    OSIF_TimerInvalid(OSIF_TIMER* p);
 
 /**
  * @}
@@ -223,8 +223,8 @@ OSIF_RESULT    OSIF_TimerInvalid(OSIF_TIMER *p);
 
 void *         OSIF_MemAlloc(size_t size);
 void *         OSIF_MemAllocAligned(size_t size, uint8_t alignment);
-OSIF_RESULT    OSIF_MemFree(void *p_block);
-OSIF_RESULT    OSIF_MemFreeAligned(void *p_block);
+OSIF_RESULT    OSIF_MemFree(void* p_block);
+OSIF_RESULT    OSIF_MemFreeAligned(void* p_block);
 
 size_t         OSIF_MemPeekFreeSize(void);
 size_t         OSIF_MemPeekMinimumEverFreeSize(void);

@@ -133,7 +133,7 @@ uint32_t OSIF_KernelLock(void)
  * @brief           Exit the critical region. Enable preemptive context switch and interrupts
  * @param[in]       flags: Pointer to interrupt mask flag to be restored. Must be 'NULL' if not called from ISR
  */
-void OSIF_KernelUnlock(uint32_t *flags)
+void OSIF_KernelUnlock(uint32_t* flags)
 {
     if (IS_IN_HANDLER_MODE()) {
         if (flags != NULL) {
@@ -183,10 +183,10 @@ void OSIF_Delay(uint32_t ms)
  *                      pointer to the current time (prev_wake_time = OSIF_GetSysTicks())
  * @param[in]       ms: Time delay value in milliseconds
  */
-void OSIF_DelayUntil(uint32_t *prev_wake_time, uint32_t ms)
+void OSIF_DelayUntil(uint32_t* prev_wake_time, uint32_t ms)
 {
     TickType_t ticks = pdMS_TO_TICKS(ms);
-    vTaskDelayUntil((TickType_t *)prev_wake_time, ticks != 0 ? ticks : 1);
+    vTaskDelayUntil((TickType_t*)prev_wake_time, ticks != 0 ? ticks : 1);
 }
 /*============================================================================*/
 
@@ -203,7 +203,7 @@ void OSIF_DelayUntil(uint32_t *prev_wake_time, uint32_t ms)
  * @param[in]       prio: Thread priority
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN thread_fn, void * const arg, size_t stack_sz, OSIF_THREAD_PRIO prio)
+OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD* t, const char* name, OSIF_THREAD_FN thread_fn, void* const arg, size_t stack_sz, OSIF_THREAD_PRIO prio)
 {
     if (t == NULL || thread_fn == NULL) {
         return (osifERR_PARAM);
@@ -211,7 +211,7 @@ OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN t
 
     OSIF_THREAD id = NULL;
 
-    if (xTaskCreate(thread_fn, (char *)name, stack_sz, arg, prio, &id) == pdPASS) {
+    if (xTaskCreate(thread_fn, (char*)name, stack_sz, arg, prio, &id) == pdPASS) {
         *t = id;
     }
 
@@ -226,7 +226,7 @@ OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD *t, const char *name, OSIF_THREAD_FN t
  * @param[in]       t: Pointer to thread handle to suspend
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadSuspend(OSIF_THREAD *t)
+OSIF_RESULT OSIF_ThreadSuspend(OSIF_THREAD* t)
 {
     if (*t == NULL || t == NULL) {
         return (osifERR_PARAM);
@@ -245,7 +245,7 @@ OSIF_RESULT OSIF_ThreadSuspend(OSIF_THREAD *t)
  * @param[in]       t: Pointer to thread handle to resume
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadResume(OSIF_THREAD *t)
+OSIF_RESULT OSIF_ThreadResume(OSIF_THREAD* t)
 {
     if (*t == NULL || t == NULL) {
         return (osifERR_PARAM);
@@ -271,7 +271,7 @@ OSIF_RESULT OSIF_ThreadResume(OSIF_THREAD *t)
  *                      of the currently running thread
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadGetId(OSIF_THREAD *t)
+OSIF_RESULT OSIF_ThreadGetId(OSIF_THREAD* t)
 {
     if (*t == NULL || t == NULL) {
         return (osifERR_PARAM);
@@ -291,7 +291,7 @@ OSIF_RESULT OSIF_ThreadGetId(OSIF_THREAD *t)
  *                      If set to `NULL`, terminate current thread (thread from where function is called)
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadTerminate(OSIF_THREAD *t)
+OSIF_RESULT OSIF_ThreadTerminate(OSIF_THREAD* t)
 {
     vTaskDelete(t != NULL ? *t : NULL);
 
@@ -322,7 +322,7 @@ OSIF_RESULT OSIF_ThreadYield(void)
  * @param[out]      prio: Pointer to variable to save priority value
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadGetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO *prio)
+OSIF_RESULT OSIF_ThreadGetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO* prio)
 {
     if (*t == NULL || t == NULL) {
         return (osifERR_PARAM);
@@ -342,7 +342,7 @@ OSIF_RESULT OSIF_ThreadGetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO *prio)
  * @param[out]      prio: New priority value
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO prio)
+OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO prio)
 {
     if (*t == NULL || t == NULL) {
         return (osifERR_PARAM);
@@ -362,7 +362,7 @@ OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD *t, OSIF_THREAD_PRIO prio)
  * @param[in]       signal: Signal of the target thread that shall be send
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD *t, uint32_t signal)
+OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD* t, uint32_t signal)
 {
     //TODO
 
@@ -377,7 +377,7 @@ OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD *t, uint32_t signal)
  * @param[out]      signal: Pointer to current Thread Signal
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadGetSignal(uint32_t *signal)
+OSIF_RESULT OSIF_ThreadGetSignal(uint32_t* signal)
 {
     //TODO
 
@@ -395,7 +395,7 @@ OSIF_RESULT OSIF_ThreadGetSignal(uint32_t *signal)
  *                      When `OSIF_MAX_DELAY` is passed, wait for unlimited time
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t *signal, uint32_t timeout_ms)
+OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t timeout_ms)
 {
     //TODO
 
@@ -426,7 +426,7 @@ OSIF_RESULT OSIF_ThreadClearSignal(uint32_t signal)
  * @param[in]       t: Pointer to thread identifier
  * @return          Minimum amount of remaining stack space in bytes
  */
-size_t OSIF_ThreadPeekFreeStackSize(OSIF_THREAD *t)
+size_t OSIF_ThreadPeekFreeStackSize(OSIF_THREAD* t)
 {
     if (t == NULL || *t == NULL) {
         return (0UL);
@@ -446,7 +446,7 @@ size_t OSIF_ThreadPeekFreeStackSize(OSIF_THREAD *t)
  * @param[in]       item_sz: Number of bytes each item in the message queue
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size_t item_sz)
+OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX* b, const char* name, size_t msg_len, size_t item_sz)
 {
     if (b == NULL) {
         return (osifERR_PARAM);
@@ -456,7 +456,7 @@ OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size
 
     if (*b != NULL) {
 #if OSIF_CFG_OS_DEBUG
-        vQueueAddToRegistry(*b, (const char *)name);
+        vQueueAddToRegistry(*b, (const char*)name);
 #endif /* OSIF_CFG_OS_DEBUG */
 
         return (osifOK);
@@ -473,7 +473,7 @@ OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX *b, const char *name, size_t msg_len, size
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX *b)
+OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX* b)
 {
     if (OSIF_MboxMessagesWaiting(b) == osifOK) {
         return (osifERR);
@@ -495,7 +495,7 @@ OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX *b)
  *                      When `OSIF_MAX_DELAY` is passed, wait for unlimited time
  * @return          Time in units of milliseconds needed to put a message to queue
  */
-int32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
+int32_t OSIF_MboxPut(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
         return (osifERR_PARAM);
@@ -532,7 +532,7 @@ int32_t OSIF_MboxPut(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
  * @return          Time in units of milliseconds needed to get a message to queue
  *                      or @ref osifERR_TIMEOUT if it was not successful
  */
-int32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
+int32_t OSIF_MboxGet(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
         return (osifERR_PARAM);
@@ -569,7 +569,7 @@ int32_t OSIF_MboxGet(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
  * @return          Time in units of milliseconds needed to peek a message from queue
  *                      or @ref osifERR_TIMEOUT if it was not successful
  */
-int32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
+int32_t OSIF_MboxPeek(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 {
     if (b == NULL || *b == NULL) {
         return (osifERR_PARAM);
@@ -599,7 +599,7 @@ int32_t OSIF_MboxPeek(OSIF_MBOX *b, void *m, uint32_t timeout_ms)
  * @param[in]       b: Pointer to message queue structure
  * @return          The number of items available in the message queue
  */
-uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX *b)
+uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX* b)
 {
     if (b == NULL || *b == NULL) {
         return (osifERR_PARAM);
@@ -624,7 +624,7 @@ uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX *b)
  * @param[in]       b: Pointer to message queue structure
  * @return          The number of spaces available in the message queue
  */
-int32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
+int32_t OSIF_MboxSpacesAvailable(OSIF_MBOX* b)
 {
     if (b == NULL || *b == NULL) {
         return (osifERR_PARAM);
@@ -649,7 +649,7 @@ int32_t OSIF_MboxSpacesAvailable(OSIF_MBOX *b)
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MboxReset(OSIF_MBOX *b)
+OSIF_RESULT OSIF_MboxReset(OSIF_MBOX* b)
 {
     if (b == NULL || *b == NULL) {
         return (osifERR_PARAM);
@@ -670,7 +670,7 @@ OSIF_RESULT OSIF_MboxReset(OSIF_MBOX *b)
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MboxIsValid(OSIF_MBOX *b)
+OSIF_RESULT OSIF_MboxIsValid(OSIF_MBOX* b)
 {
     return (b != NULL && *b != NULL ? osifOK : osifERR);
 }
@@ -683,7 +683,7 @@ OSIF_RESULT OSIF_MboxIsValid(OSIF_MBOX *b)
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MboxInvalid(OSIF_MBOX *b)
+OSIF_RESULT OSIF_MboxInvalid(OSIF_MBOX* b)
 {
     *b = OSIF_MBOX_NULL;
 
@@ -700,7 +700,7 @@ OSIF_RESULT OSIF_MboxInvalid(OSIF_MBOX *b)
  * @param[out]      p: Pointer to mutex structure to allocate
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX *p, const char *name)
+OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX* p, const char* name)
 {
     if (p == NULL) {
         return (osifERR_PARAM);
@@ -711,7 +711,7 @@ OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX *p, const char *name)
         OSIF_SemaphoreRelease(p);
 
 #if OSIF_CFG_OS_DEBUG
-        vQueueAddToRegistry(*p, (const char *)name);
+        vQueueAddToRegistry(*p, (const char*)name);
 #endif /* OSIF_CFG_OS_DEBUG */
 
         return (osifOK);
@@ -728,7 +728,7 @@ OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX *p, const char *name)
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX *p)
+OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX* p)
 {
     vSemaphoreDelete(*p);
 
@@ -743,7 +743,7 @@ OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX *p)
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX *p)
+OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX* p)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -760,7 +760,7 @@ OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX *p)
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexUnlock(OSIF_MUTEX *p)
+OSIF_RESULT OSIF_MutexUnlock(OSIF_MUTEX* p)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -777,7 +777,7 @@ OSIF_RESULT OSIF_MutexUnlock(OSIF_MUTEX *p)
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexIsValid(OSIF_MUTEX *p)
+OSIF_RESULT OSIF_MutexIsValid(OSIF_MUTEX* p)
 {
     return (p != NULL && *p != NULL ? osifOK : osifERR);
 }
@@ -790,7 +790,7 @@ OSIF_RESULT OSIF_MutexIsValid(OSIF_MUTEX *p)
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX *p)
+OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX* p)
 {
     *p = OSIF_MUTEX_NULL;
 
@@ -810,7 +810,7 @@ OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX *p)
  *                     `1`: Keep token available
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cnt)
+OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE* p, const char* name, uint8_t cnt)
 {
     if (p == NULL) {
         return (osifERR_PARAM);
@@ -829,7 +829,7 @@ OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cn
         }
 
 #if OSIF_CFG_OS_DEBUG
-        vQueueAddToRegistry(*p, (const char *)name);
+        vQueueAddToRegistry(*p, (const char*)name);
 #endif /* OSIF_CFG_OS_DEBUG */
 
         return (osifOK);
@@ -846,7 +846,7 @@ OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE *p, const char *name, uint8_t cn
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_SemaphoreDelete(OSIF_SEMAPHORE *p)
+OSIF_RESULT OSIF_SemaphoreDelete(OSIF_SEMAPHORE* p)
 {
     vSemaphoreDelete(*p);
 
@@ -863,7 +863,7 @@ OSIF_RESULT OSIF_SemaphoreDelete(OSIF_SEMAPHORE *p)
  * @return          Number of milliseconds waited for semaphore to become available or
  *                      @ref osifERR_TIMEOUT if not available within given time
  */
-int32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms)
+int32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE* p, uint32_t timeout_ms)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -895,7 +895,7 @@ int32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE *p, uint32_t timeout_ms)
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_SemaphoreRelease(OSIF_SEMAPHORE *p)
+OSIF_RESULT OSIF_SemaphoreRelease(OSIF_SEMAPHORE* p)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -922,7 +922,7 @@ OSIF_RESULT OSIF_SemaphoreRelease(OSIF_SEMAPHORE *p)
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_SemaphoreIsValid(OSIF_SEMAPHORE *p)
+OSIF_RESULT OSIF_SemaphoreIsValid(OSIF_SEMAPHORE* p)
 {
     return (p != NULL && *p != NULL ? osifOK : osifERR);
 }
@@ -935,7 +935,7 @@ OSIF_RESULT OSIF_SemaphoreIsValid(OSIF_SEMAPHORE *p)
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_SemaphoreInvalid(OSIF_SEMAPHORE *p)
+OSIF_RESULT OSIF_SemaphoreInvalid(OSIF_SEMAPHORE* p)
 {
     *p = OSIF_SEMAPHORE_NULL;
 
@@ -954,13 +954,13 @@ OSIF_RESULT OSIF_SemaphoreInvalid(OSIF_SEMAPHORE *p)
  * @param[in]       reload: `1` if periodic timer, `0` if one-shot timer
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_fn, void * const arg, uint8_t reload)
+OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER* p, const char* name, OSIF_TIMER_FN tim_fn, void* const arg, uint8_t reload)
 {
     if (p == NULL || tim_fn == NULL) {
         return (osifERR_PARAM);
     }
 
-    *p = xTimerCreate((const char *)name, 1, (BaseType_t)reload, arg, (TimerCallbackFunction_t)tim_fn);
+    *p = xTimerCreate((const char*)name, 1, (BaseType_t)reload, arg, (TimerCallbackFunction_t)tim_fn);
 
     return (*p != NULL ? osifOK : osifERR_MEM);
 }
@@ -973,7 +973,7 @@ OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER *p, const char *name, OSIF_TIMER_FN tim_
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerDelete(OSIF_TIMER *p)
+OSIF_RESULT OSIF_TimerDelete(OSIF_TIMER* p)
 {
     xTimerDelete(*p, OSIF_MAX_DELAY);
 
@@ -989,7 +989,7 @@ OSIF_RESULT OSIF_TimerDelete(OSIF_TIMER *p)
  * @param[in]       period_ms: time interval value of the timer in milliseconds
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerStart(OSIF_TIMER *p, uint32_t period_ms)
+OSIF_RESULT OSIF_TimerStart(OSIF_TIMER* p, uint32_t period_ms)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -1021,7 +1021,7 @@ OSIF_RESULT OSIF_TimerStart(OSIF_TIMER *p, uint32_t period_ms)
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerStop(OSIF_TIMER *p)
+OSIF_RESULT OSIF_TimerStop(OSIF_TIMER* p)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
@@ -1049,7 +1049,7 @@ OSIF_RESULT OSIF_TimerStop(OSIF_TIMER *p)
  * @param[in]       period_ms: New time interval value in milliseconds
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER *p, uint32_t period_ms)
+OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER* p, uint32_t period_ms)
 {
     return (OSIF_TimerStart(p, period_ms));
 }
@@ -1063,7 +1063,7 @@ OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER *p, uint32_t period_ms)
  * @param[out]      p_timer_id: Pointer to ID value
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER *p, uint32_t *p_timer_id)
+OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER* p, uint32_t* p_timer_id)
 {
     if (p == NULL || *p == NULL || *p_timer_id == NULL) {
         return (osifERR_PARAM);
@@ -1082,7 +1082,7 @@ OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER *p, uint32_t *p_timer_id)
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerIsValid(OSIF_TIMER *p)
+OSIF_RESULT OSIF_TimerIsValid(OSIF_TIMER* p)
 {
     return (p != NULL && *p != NULL ? osifOK : osifERR);
 }
@@ -1095,7 +1095,7 @@ OSIF_RESULT OSIF_TimerIsValid(OSIF_TIMER *p)
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_TimerInvalid(OSIF_TIMER *p)
+OSIF_RESULT OSIF_TimerInvalid(OSIF_TIMER* p)
 {
     *p = OSIF_TIMER_NULL;
 
@@ -1110,7 +1110,7 @@ OSIF_RESULT OSIF_TimerInvalid(OSIF_TIMER *p)
  * @param[in]       size: Allocated memory size
  * @return          Pointer to allocated memory block
  */
-void * OSIF_MemAlloc(size_t size)
+void* OSIF_MemAlloc(size_t size)
 {
     return (pvPortMalloc(size));
 }
@@ -1124,23 +1124,23 @@ void * OSIF_MemAlloc(size_t size)
  * @param[in]       alignment: 
  * @return          Pointer to allocated memory block
  */
-void * OSIF_MemAllocAligned(size_t size, uint8_t alignment)
+void* OSIF_MemAllocAligned(size_t size, uint8_t alignment)
 {
-    void *p;
-    void *p_aligned;
+    void* p;
+    void* p_aligned;
 
     if (alignment == 0) {
         alignment = portBYTE_ALIGNMENT;
     }
 
-    p = pvPortMalloc(size + sizeof(void *) + alignment);
+    p = pvPortMalloc(size + sizeof(void*) + alignment);
     if (p == NULL) {
         return (p);
     }
 
-    p_aligned = (void *)(((size_t)p + sizeof(void *) + alignment) & ~(alignment - 1));
+    p_aligned = (void*)(((size_t)p + sizeof(void*) + alignment) & ~(alignment - 1));
 
-    memcpy((uint8_t *)p_aligned - sizeof(void *), &p, sizeof(void *));
+    memcpy((uint8_t*)p_aligned - sizeof(void*), &p, sizeof(void*));
 
     return (p_aligned);
 }
@@ -1152,7 +1152,7 @@ void * OSIF_MemAllocAligned(size_t size, uint8_t alignment)
  * @brief           Free allocated memory
  * @param[in]       p_block: Pointer to allocated memory block
  */
-OSIF_RESULT OSIF_MemFree(void *p_block)
+OSIF_RESULT OSIF_MemFree(void* p_block)
 {
     if (p_block == NULL) {
         return (osifERR_PARAM);
@@ -1170,14 +1170,14 @@ OSIF_RESULT OSIF_MemFree(void *p_block)
  * @brief           Free allocated aligned memory
  * @param[in]       p_block: Pointer to allocated aligned memory block
  */
-OSIF_RESULT OSIF_MemFreeAligned(void *p_block)
+OSIF_RESULT OSIF_MemFreeAligned(void* p_block)
 {
-    void *p;
+    void* p;
     if (p_block == NULL) {
         return (osifERR_PARAM);
     }
 
-    memcpy(&p, (uint8_t *)p_block - sizeof(void *), sizeof(void *));
+    memcpy(&p, (uint8_t*)p_block - sizeof(void*), sizeof(void*));
 
     vPortFree(p);
 
