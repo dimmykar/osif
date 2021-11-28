@@ -39,7 +39,8 @@
 #include <stdint.h>
 
 /**
- * @addtogroup      OSIF
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_FREERTOS   FreeRTOS specific types for OSIF
  * @{
  */
 
@@ -138,7 +139,7 @@ typedef TimerHandle_t               OSIF_TIMER;
 
 /**
  * @brief           Default thread priority value, may be used by firmware
- *                      to start built-in threads
+ *                      to start threads without specified priority.
  *
  * Threads can well operate with normal (default) priority and do not require
  * any special feature in terms of priority for prior operation.
@@ -148,7 +149,7 @@ typedef TimerHandle_t               OSIF_TIMER;
 /**
  * @brief           Stack size in units of words for OSIF threads
  *
- * It is used as default stack size for all built-in threads.
+ * It is used as default stack size for all threads without specified stack size.
  */
 #define OSIF_THREAD_DEFAULT_SS      (sizeof(size_t) * 128U)
 

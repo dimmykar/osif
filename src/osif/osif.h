@@ -51,7 +51,7 @@ extern "C" {
  *                           Public defines & types
  *============================================================================*/
 /**
- * @defgroup        OSIF OS interface functions
+ * @defgroup        OSIF            OS interface functions
  * @brief           OS based function for OS management, timings, etc
  * @{
  */
@@ -76,7 +76,7 @@ typedef enum
 typedef void (*OSIF_THREAD_FN)(void*);
 
 /**
- * @brief           RTOS software timer callback function prototype
+ * @brief           OS software timer callback function prototype
  */
 typedef void (*OSIF_TIMER_FN)(const void*);
 
@@ -91,8 +91,12 @@ typedef void (*OSIF_TIMER_FN)(const void*);
  *                              Public functions
  *============================================================================*/
 /**
- * @anchor          OSIF_KERNEL_MNG
- * @name            OSIF Kernel Management
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_KERNEL_MNG OSIF Kernel Management
+ *
+ * @brief           Manage the kernel scheduler functions.
+ *
+ * @{
  */
 
 OSIF_RESULT    OSIF_KernelStart(void);
@@ -108,11 +112,17 @@ void           OSIF_DelayUntil(uint32_t* prev_wake_time, uint32_t ms);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
- * @anchor          OSIF_THREAD
- * @name            Threads
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_THREAD     Thread Management
+ *
+ * @brief           Define, create, and control thread functions
+ * @details         The Thread Management function group allows to create, delete, and control threads
+ *                      in the system
+ *
+ * @{
  */
 
 OSIF_RESULT    OSIF_ThreadCreate(OSIF_THREAD* t, const char* name, OSIF_THREAD_FN thread_fn, void* const arg, size_t stack_sz, OSIF_THREAD_PRIO prio);
@@ -136,11 +146,20 @@ size_t         OSIF_ThreadPeekFreeStackSize(OSIF_THREAD* t);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
- * @anchor          OSIF_MBOX
- * @name            Message queues
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_MBOX       Message queues
+ *
+ * @brief           Exchange messages between threads in a FIFO-like operation.
+ * @details         The Message Queue function group allows to control, send, receive, or wait for message.
+ *                      Message transmission is a basic communication model between threads that one thread sends
+ *                      data explicitly, while another thread receives it. The operation is more like some
+ *                      kind of I/O rather than a direct access to information to be shared. The data to be
+ *                      passed can be any type.
+ *
+ * @{
  */
 
 OSIF_RESULT    OSIF_MboxCreate(OSIF_MBOX* b, const char* name, size_t msg_len, size_t item_sz);
@@ -158,11 +177,21 @@ OSIF_RESULT    OSIF_MboxInvalid(OSIF_MBOX* b);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
- * @anchor          OSIF_MUTEX
- * @name            Mutex
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_MUTEX      Mutexes
+ *
+ * @brief           Initialize and manage Mutex functions.
+ * @details         Mutex (Mutual Exclusion) is used to protect a shared resource that can be accessed
+ *                      only by one thread at a time.\n
+ *                      A mutex is a special version of a binary empty semaphore. The advantage of a mutex
+ *                      is that it introduces thread ownership. When a thread acquires a mutex and becomes its
+ *                      owner, subsequent mutex acquires from that thread will succeed immediately. Thus, mutex
+ *                      acquires/releases can be nested.
+ *
+ * @{
  */
 
 OSIF_RESULT    OSIF_MutexCreate(OSIF_MUTEX* p, const char* name);
@@ -176,11 +205,24 @@ OSIF_RESULT    OSIF_MutexInvalid(OSIF_MUTEX* p);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
- * @anchor          OSIF_SEMAPHORE
- * @name            Semaphores
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_SEMAPHORE  Semaphores
+ *
+ * @brief           Initialize and manage Semaphore functions.
+ * @details         Semaphores are used to manage and protect access to shared resources. A semaphore
+ *                      can be used to permit a fixed number of thread to access a pool of shared resources.
+ *                      Using semaphores.\n
+ *                      A semaphore object should be initialized to the maximum number of available tokens.
+ *                      This number of available resources is specified as parameter of the OSIF_SemaphoreCreate()
+ *                      function. Each time a semaphore token is obtained with OSIF_SemaphoreWait(), the semaphore
+ *                      count is decremented. When the semaphore count is 0, no semaphore token can be obtained.
+ *                      The thread that tries to obtain the semaphore token needs to wait until the next token
+ *                      is free. Semaphores are released with OSIF_SemaphoreRelease() incrementing the semaphore count.
+ *
+ * @{
  */
 
 OSIF_RESULT    OSIF_SemaphoreCreate(OSIF_SEMAPHORE* p, const char* name, uint8_t cnt);
@@ -194,13 +236,20 @@ OSIF_RESULT    OSIF_SemaphoreInvalid(OSIF_SEMAPHORE* p);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
- * @anchor          OSIF_TIMER
- * @name            OS Software times
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_TIMER      OS Software Timers Management
+ *
+ * @brief           Create and control software timer and timer callback functions.
+ * @details         The OS Software Timers Management function group allows to create, delete, and control software
+ *                      timers in the system. The software timers can be configured as one-short or periodic
+ *                      timers. When a timer expires, a callback function associated with the timer is
+ *                      executed.
+ *
+ * @{
  */
-
 OSIF_RESULT    OSIF_TimerCreate(OSIF_TIMER* p, const char* name, OSIF_TIMER_FN tim_fn, void* const arg, uint8_t reload);
 OSIF_RESULT    OSIF_TimerDelete(OSIF_TIMER* p);
 
@@ -214,13 +263,18 @@ OSIF_RESULT    OSIF_TimerInvalid(OSIF_TIMER* p);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
- * @anchor          OSIF_MEM_MNG
- * @name            OS Memory Managment
+ * @addtogroup      OSIF            OS interface functions
+ * @defgroup        OSIF_MEM_MNG    OS Memory Managment
+ *
+ * @brief           Allocate, free, and peek memory functions.
+ * @details         The OS Memory Management function group allows to allocate, free, and peek heap
+ *                      memory in the system.
+ *
+ * @{
  */
-
 void *         OSIF_MemAlloc(size_t size);
 void *         OSIF_MemAllocAligned(size_t size, uint8_t alignment);
 OSIF_RESULT    OSIF_MemFree(void* p_block);
@@ -231,11 +285,11 @@ size_t         OSIF_MemPeekMinimumEverFreeSize(void);
 
 /**
  * @}
- */
+ */    /* End of addtogroup OSIF */
 
 /**
  * @}
- */
+ */    /* End of defgroup OSIF */
 
 
 /*============================================================================*/

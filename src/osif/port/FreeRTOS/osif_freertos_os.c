@@ -70,6 +70,8 @@
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Start OS kernel scheduler
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
@@ -84,6 +86,8 @@ OSIF_RESULT OSIF_KernelStart(void)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Suspend OS kernel scheduler
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
@@ -98,6 +102,8 @@ OSIF_RESULT OSIF_KernelSuspend(void)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Resume execution of suspended OS kernel scheduler
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
@@ -110,6 +116,8 @@ OSIF_RESULT OSIF_KernelResume(void)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Enter the critical region. Disable preemptive context switch and interrupts
  * @return          Interrupt mask flag
  */
@@ -130,6 +138,8 @@ uint32_t OSIF_KernelLock(void)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Exit the critical region. Enable preemptive context switch and interrupts
  * @param[in]       flags: Pointer to interrupt mask flag to be restored. Must be 'NULL' if not called from ISR
  */
@@ -148,6 +158,8 @@ void OSIF_KernelUnlock(uint32_t* flags)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Get current time in units of milliseconds
  * @return          Current time in units of ticks
  */
@@ -164,6 +176,8 @@ uint32_t OSIF_GetSysTicks(void)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Delay current task in a given milliseconds
  * @param[in]       ms: Time delay value in milliseconds
  */
@@ -177,6 +191,8 @@ void OSIF_Delay(uint32_t ms)
 
 
 /**
+ * @ingroup         OSIF_KERNEL_MNG
+ *
  * @brief           Delay current task in a given milliseconds
  * @param[in]       prev_wake_time: Pointer to a variable that holds the time at which the
  *                      task was last unblocked. This variable must be initialized with the
@@ -193,6 +209,8 @@ void OSIF_DelayUntil(uint32_t* prev_wake_time, uint32_t ms)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Create a new thread
  * @param[out]      t: Pointer to thread identifier if create was successful.
  *                     It may be set to `NULL`
@@ -222,6 +240,8 @@ OSIF_RESULT OSIF_ThreadCreate(OSIF_THREAD* t, const char* name, OSIF_THREAD_FN t
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Suspend thread routine execution
  * @param[in]       t: Pointer to thread handle to suspend
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -241,6 +261,8 @@ OSIF_RESULT OSIF_ThreadSuspend(OSIF_THREAD* t)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Resume thread routine execution
  * @param[in]       t: Pointer to thread handle to resume
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -266,6 +288,8 @@ OSIF_RESULT OSIF_ThreadResume(OSIF_THREAD* t)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Get thread ID of the currently running thread
  * @param[out]      t: Pointer to thread handle that will store the thread ID
  *                      of the currently running thread
@@ -286,6 +310,8 @@ OSIF_RESULT OSIF_ThreadGetId(OSIF_THREAD* t)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Terminate thread (shut it down and remove)
  * @param[in]       t: Pointer to thread handle to terminate.
  *                      If set to `NULL`, terminate current thread (thread from where function is called)
@@ -302,6 +328,8 @@ OSIF_RESULT OSIF_ThreadTerminate(OSIF_THREAD* t)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Yield current thread
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
@@ -317,6 +345,8 @@ OSIF_RESULT OSIF_ThreadYield(void)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Get priority of an active thread
  * @param[in]       t: Pointer to thread identifier
  * @param[out]      prio: Pointer to variable to save priority value
@@ -337,6 +367,8 @@ OSIF_RESULT OSIF_ThreadGetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO* prio)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Change priority of an active thread
  * @param[in]       t: Pointer to thread identifier
  * @param[out]      prio: New priority value
@@ -357,6 +389,8 @@ OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO prio)
 
 //TODO
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Send the specified Thread Signal to the target thread
  * @param[in]       t: Pointer to thread identifier
  * @param[in]       signal: Signal of the target thread that shall be send
@@ -373,6 +407,8 @@ OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD* t, uint32_t signal)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Get the current Thread Signal of current running thread
  * @param[out]      signal: Pointer to current Thread Signal
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -388,6 +424,8 @@ OSIF_RESULT OSIF_ThreadGetSignal(uint32_t* signal)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Receive with timeout one or more Thread Signal of the current
  *                      running thread to become signaled
  * @param[out]      signal: Pointer to thread signal to receive
@@ -406,6 +444,8 @@ OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t timeout_ms)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Clear the specified Thread Signal of current running thread
  * @param[in]       signal: Signal of the thread that shall be cleared
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -421,6 +461,8 @@ OSIF_RESULT OSIF_ThreadClearSignal(uint32_t signal)
 
 
 /**
+ * @ingroup         OSIF_THREAD
+ *
  * @brief           Peek the minimum amount of remaining stack space that was available
  *                      to the thread since the thread started executing
  * @param[in]       t: Pointer to thread identifier
@@ -439,6 +481,8 @@ size_t OSIF_ThreadPeekFreeStackSize(OSIF_THREAD* t)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Create a new message queue
  * @param[out]      b: Pointer to message queue structure
  * @param[in]       name: Name of a new message queue
@@ -469,6 +513,8 @@ OSIF_RESULT OSIF_MboxCreate(OSIF_MBOX* b, const char* name, size_t msg_len, size
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Delete message queue
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -488,6 +534,8 @@ OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX* b)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Put a new entry to message queue and wait until memory available
  * @param[in]       b: Pointer to message queue structure
  * @param[in]       m: Pointer to entry to insert to message queue
@@ -524,6 +572,8 @@ int32_t OSIF_MboxPut(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Get a new entry from message queue with timeout
  * @param[in]       b: Pointer to message queue structure
  * @param[in]       m: Pointer to result to save value from message queue to
@@ -561,6 +611,8 @@ int32_t OSIF_MboxGet(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Get a new entry from message queue without removing it from message queue with timeout
  * @param[in]       b: Pointer to message queue structure
  * @param[in]       m: Pointer to result to save value from message queue to
@@ -595,6 +647,8 @@ int32_t OSIF_MboxPeek(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Get the number of available messages stored in the message queue
  * @param[in]       b: Pointer to message queue structure
  * @return          The number of items available in the message queue
@@ -620,6 +674,8 @@ uint32_t OSIF_MboxMessagesWaiting(OSIF_MBOX* b)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Get the number of free spaces available in the message queue
  * @param[in]       b: Pointer to message queue structure
  * @return          The number of spaces available in the message queue
@@ -645,6 +701,8 @@ int32_t OSIF_MboxSpacesAvailable(OSIF_MBOX* b)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Reset a message queue to its empty state
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -666,6 +724,8 @@ OSIF_RESULT OSIF_MboxReset(OSIF_MBOX* b)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Check if message queue is valid
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -679,6 +739,8 @@ OSIF_RESULT OSIF_MboxIsValid(OSIF_MBOX* b)
 
 
 /**
+ * @ingroup         OSIF_MBOX
+ *
  * @brief           Set message queue structure as invalid
  * @param[in]       b: Pointer to message queue structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -694,6 +756,8 @@ OSIF_RESULT OSIF_MboxInvalid(OSIF_MBOX* b)
 
 
 /**
+ * @ingroup         OSIF_MUTEX
+ *
  * @brief           Create new recursive mutex
  * @note            Recursive mutex has to be created as it may be locked multiple times before unlocked
  * @param[in]       name: Name of a new recursive mutex (can be anything in this port)
@@ -724,6 +788,8 @@ OSIF_RESULT OSIF_MutexCreate(OSIF_MUTEX* p, const char* name)
 
 
 /**
+ * @ingroup         OSIF_MUTEX
+ *
  * @brief           Delete recursive mutex from system
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -739,6 +805,8 @@ OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX* p)
 
 
 /**
+ * @ingroup         OSIF_MUTEX
+ *
  * @brief           Lock recursive mutex, wait forever to lock
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -756,6 +824,8 @@ OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX* p)
 
 
 /**
+ * @ingroup         OSIF_MUTEX
+ *
  * @brief           Unlock recursive mutex
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -773,6 +843,8 @@ OSIF_RESULT OSIF_MutexUnlock(OSIF_MUTEX* p)
 
 
 /**
+ * @ingroup         OSIF_MUTEX
+ *
  * @brief           Check if mutex structure is valid
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -786,6 +858,8 @@ OSIF_RESULT OSIF_MutexIsValid(OSIF_MUTEX* p)
 
 
 /**
+ * @ingroup         OSIF_MUTEX
+ *
  * @brief           Set recursive mutex structure as invalid
  * @param[in]       p: Pointer to mutex structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -800,7 +874,10 @@ OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX* p)
 
 
 
+// TODO Rework binary semaphores to counting semaphores
 /**
+ * @ingroup         OSIF_SEMAPHORE
+ *
  * @brief           Create a new binary semaphore and set initial state
  * @note            Semaphore may only have `1` token available
  * @param[in]       name: Name of a new binary semaphore (can be anything in this port)
@@ -842,6 +919,8 @@ OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE* p, const char* name, uint8_t cn
 
 
 /**
+ * @ingroup         OSIF_SEMAPHORE
+ *
  * @brief           Delete binary semaphore
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -857,6 +936,8 @@ OSIF_RESULT OSIF_SemaphoreDelete(OSIF_SEMAPHORE* p)
 
 
 /**
+ * @ingroup         OSIF_SEMAPHORE
+ *
  * @brief           Wait for semaphore to be available
  * @param[in]       p: Pointer to semaphore structure
  * @param[in]       timeout: Timeout to wait in milliseconds. When `0` is passed, wait forever
@@ -891,6 +972,8 @@ int32_t OSIF_SemaphoreWait(OSIF_SEMAPHORE* p, uint32_t timeout_ms)
 
 
 /**
+ * @ingroup         OSIF_SEMAPHORE
+ *
  * @brief           Release semaphore
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -918,6 +1001,8 @@ OSIF_RESULT OSIF_SemaphoreRelease(OSIF_SEMAPHORE* p)
 
 
 /**
+ * @ingroup         OSIF_SEMAPHORE
+ *
  * @brief           Check if semaphore is valid
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -931,6 +1016,8 @@ OSIF_RESULT OSIF_SemaphoreIsValid(OSIF_SEMAPHORE* p)
 
 
 /**
+ * @ingroup         OSIF_SEMAPHORE
+ *
  * @brief           Set semaphore structure as invalid
  * @param[in]       p: Pointer to semaphore structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -946,6 +1033,8 @@ OSIF_RESULT OSIF_SemaphoreInvalid(OSIF_SEMAPHORE* p)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Create a new RTOS software timer
  * @param[in]       name: Name of a new software timer (can be anything in this port)
                     p: Pointer to timer structure if create was successful.
@@ -969,6 +1058,8 @@ OSIF_RESULT OSIF_TimerCreate(OSIF_TIMER* p, const char* name, OSIF_TIMER_FN tim_
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Delete RTOS software timer
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -984,6 +1075,8 @@ OSIF_RESULT OSIF_TimerDelete(OSIF_TIMER* p)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Start RTOS software timer
  * @param[in]       p: Pointer to timer structure
  * @param[in]       period_ms: time interval value of the timer in milliseconds
@@ -1017,6 +1110,8 @@ OSIF_RESULT OSIF_TimerStart(OSIF_TIMER* p, uint32_t period_ms)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Stop RTOS software timer
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -1044,6 +1139,8 @@ OSIF_RESULT OSIF_TimerStop(OSIF_TIMER* p)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Restart RTOS software timer with new period
  * @param[in]       p: Pointer to timer structure
  * @param[in]       period_ms: New time interval value in milliseconds
@@ -1058,6 +1155,8 @@ OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER* p, uint32_t period_ms)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Get RTOS software timer ID
  * @param[in]       p: Pointer to timer structure
  * @param[out]      p_timer_id: Pointer to ID value
@@ -1078,6 +1177,8 @@ OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER* p, uint32_t* p_timer_id)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Check if software timer is valid
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -1091,6 +1192,8 @@ OSIF_RESULT OSIF_TimerIsValid(OSIF_TIMER* p)
 
 
 /**
+ * @ingroup         OSIF_TIMER
+ *
  * @brief           Set timer structure as invalid
  * @param[in]       p: Pointer to timer structure
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
@@ -1106,6 +1209,8 @@ OSIF_RESULT OSIF_TimerInvalid(OSIF_TIMER* p)
 
 
 /**
+ * @ingroup         OSIF_MEM_MNG
+ *
  * @brief           Allocate memory
  * @param[in]       size: Allocated memory size
  * @return          Pointer to allocated memory block
@@ -1119,6 +1224,8 @@ void* OSIF_MemAlloc(size_t size)
 
 
 /**
+ * @ingroup         OSIF_MEM_MNG
+ *
  * @brief           Allocate aligned memory
  * @param[in]       size: Allocated memory size
  * @param[in]       alignment: 
@@ -1149,6 +1256,8 @@ void* OSIF_MemAllocAligned(size_t size, uint8_t alignment)
 
 
 /**
+ * @ingroup         OSIF_MEM_MNG
+ *
  * @brief           Free allocated memory
  * @param[in]       p_block: Pointer to allocated memory block
  */
@@ -1167,6 +1276,8 @@ OSIF_RESULT OSIF_MemFree(void* p_block)
 
 
 /**
+ * @ingroup         OSIF_MEM_MNG
+ *
  * @brief           Free allocated aligned memory
  * @param[in]       p_block: Pointer to allocated aligned memory block
  */
@@ -1188,6 +1299,8 @@ OSIF_RESULT OSIF_MemFreeAligned(void* p_block)
 
 
 /**
+ * @ingroup         OSIF_MEM_MNG
+ *
  * @brief           Peek unused (available) heap memory size
  * @return          Unused heap size in bytes
  */
@@ -1200,6 +1313,8 @@ size_t OSIF_MemPeekFreeSize(void)
 
 
 /**
+ * @ingroup         OSIF_MEM_MNG
+ *
  * @brief           Peek the lowest amount of free heap space that has existed
  *                      on the system since the application was booted
  * @return          Minimum free heap size ever in bytes
