@@ -474,7 +474,7 @@ size_t OSIF_ThreadPeekFreeStackSize(OSIF_THREAD* t)
         return (0UL);
     }
 
-    return (uxTaskGetStackHighWaterMark(*t) / sizeof(size_t));
+    return (uxTaskGetStackHighWaterMark(*t) * sizeof(size_t));
 }
 /*============================================================================*/
 
@@ -1306,7 +1306,7 @@ OSIF_RESULT OSIF_MemFreeAligned(void* p_block)
  */
 size_t OSIF_MemPeekFreeSize(void)
 {
-    return (xPortGetFreeHeapSize() / sizeof(size_t));
+    return (xPortGetFreeHeapSize());
 }
 /*============================================================================*/
 
@@ -1321,6 +1321,6 @@ size_t OSIF_MemPeekFreeSize(void)
  */
 size_t OSIF_MemPeekMinimumEverFreeSize(void)
 {
-    return (xPortGetMinimumEverFreeHeapSize() / sizeof(size_t));
+    return (xPortGetMinimumEverFreeHeapSize());
 }
 /*============================================================================*/
