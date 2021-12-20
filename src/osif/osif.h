@@ -139,7 +139,7 @@ OSIF_RESULT    OSIF_ThreadSetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO prio);
 
 OSIF_RESULT    OSIF_ThreadSendSignal(OSIF_THREAD* t, uint32_t signal);
 OSIF_RESULT    OSIF_ThreadGetSignal(uint32_t* signal);
-OSIF_RESULT    OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t timeout_ms);
+OSIF_RESULT    OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t actions, uint32_t timeout_ms);
 OSIF_RESULT    OSIF_ThreadClearSignal(uint32_t signal);
 
 size_t         OSIF_ThreadPeekFreeStackSize(OSIF_THREAD* t);

@@ -387,7 +387,7 @@ OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO prio)
 /*============================================================================*/
 
 
-//TODO
+
 /**
  * @ingroup         OSIF_THREAD
  *
@@ -398,9 +398,22 @@ OSIF_RESULT OSIF_ThreadSetPriority(OSIF_THREAD* t, OSIF_THREAD_PRIO prio)
  */
 OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD* t, uint32_t signal)
 {
-    //TODO
+    if (*t == NULL || t == NULL) {
+        return (osifERR_PARAM);
+    }
 
-    return (osifERR);
+    BaseType_t res = pdFALSE;
+
+    if (IS_IN_HANDLER_MODE()) {
+        BaseType_t task_woken = pdFALSE;
+
+        res = xTaskNotifyFromISR(*t, signal, eSetBits, &task_woken);
+        portEND_SWITCHING_ISR(task_woken);
+    } else {
+        res = xTaskNotify(*t, signal, eSetBits);
+    }
+
+    return (res == pdTRUE ? osifOK : osifERR);
 }
 /*============================================================================*/
 
@@ -415,9 +428,30 @@ OSIF_RESULT OSIF_ThreadSendSignal(OSIF_THREAD* t, uint32_t signal)
  */
 OSIF_RESULT OSIF_ThreadGetSignal(uint32_t* signal)
 {
-    //TODO
+    if (signal == NULL) {
+        return (osifERR_PARAM);
+    }
 
-    return (osifERR);
+    TaskHandle_t t;
+    uint32_t thread_signal;
+    BaseType_t res = pdFALSE;
+
+    if (IS_IN_HANDLER_MODE()) {
+        *signal = 0x00;
+        return (osifERR_ISR);
+    } else {
+        t = xTaskGetCurrentTaskHandle();
+
+        if (xTaskNotifyAndQuery(t, 0x00, eNoAction, &thread_signal) == pdPASS) {
+            *signal = thread_signal;
+            res = pdTRUE;
+        } else {
+            *signal = 0x00;
+            res = pdFALSE;
+        }
+    }
+
+    return (res = pdTRUE ? osifOK : osifERR);
 }
 /*============================================================================*/
 
@@ -427,17 +461,33 @@ OSIF_RESULT OSIF_ThreadGetSignal(uint32_t* signal)
  * @ingroup         OSIF_THREAD
  *
  * @brief           Receive with timeout one or more Thread Signal of the current
- *                      running thread to become signaled
+ *                      running thread to become signaled. Thread remains in
+ *                      blocked state until it is signaled
  * @param[out]      signal: Pointer to thread signal to receive
+ * @param[in]       actions: Specifed actions for Thread Signals:
+ *                      '0' - Wait for Any Signal
+ *                      '1' - Wait for All Signals
+ *                      '2' - No Clear Signals on Exit
  * @param[in]       timeout_ms: Maximum timeout to wait for Thread Signal.
  *                      When `OSIF_MAX_DELAY` is passed, wait for unlimited time
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t timeout_ms)
+OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t actions, uint32_t timeout_ms)
 {
-    //TODO
+    if (signal == NULL) {
+        return (osifERR_PARAM);
+    }
 
-    return (osifERR);
+    BaseType_t res = pdFALSE;
+
+    if (IS_IN_HANDLER_MODE()) {
+        return (osifERR_ISR);
+    } else {
+        res = xTaskNotifyWait(0x00, 0xFFFFFFFF, signal, timeout_ms);
+        // TODO implement actions
+    }
+
+    return (res = pdTRUE ? osifOK : osifERR);
 }
 /*============================================================================*/
 
@@ -452,9 +502,20 @@ OSIF_RESULT OSIF_ThreadRecvSignal(uint32_t* signal, uint32_t timeout_ms)
  */
 OSIF_RESULT OSIF_ThreadClearSignal(uint32_t signal)
 {
-    //TODO
+    TaskHandle_t t;
+    uint32_t flags_to_clear = 0;
+    BaseType_t res = pdFALSE;
 
-    return (osifERR);
+    if (IS_IN_HANDLER_MODE()) {
+        return (osifERR_ISR);
+    } else {
+        t = xTaskGetCurrentTaskHandle();
+
+        flags_to_clear &= ~signal;
+        res = xTaskNotify(t, flags_to_clear, eSetValueWithOverwrite);
+    }
+
+    return (res == pdTRUE ? osifOK : osifERR);
 }
 /*============================================================================*/
 
