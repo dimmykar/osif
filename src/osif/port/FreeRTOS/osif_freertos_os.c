@@ -50,7 +50,7 @@
  * @return          `1` if in handler mode, `0` if in thread mode
  * @hideinitializer
  */
-#define IS_IN_HANDLER_MODE()        (__get_IPSR() != 0U)
+#define IS_IN_HANDLER_MODE()        (__get_IPSR() != 0U)    //TODO not only for ARM
 
 
 /*============================================================================*
@@ -1164,7 +1164,7 @@ OSIF_RESULT OSIF_TimerRestart(OSIF_TIMER* p, uint32_t period_ms)
  */
 OSIF_RESULT OSIF_TimerGetId(OSIF_TIMER* p, uint32_t* p_timer_id)
 {
-    if (p == NULL || *p == NULL || *p_timer_id == NULL) {
+    if (p == NULL || *p == NULL || p_timer_id == NULL) {
         return (osifERR_PARAM);
     }
 
