@@ -151,7 +151,7 @@ typedef TimerHandle_t               OSIF_TIMER;
  *
  * It is used as default stack size for all threads without specified stack size.
  */
-#define OSIF_THREAD_DEFAULT_SS      (sizeof(size_t) * 128U)
+#define OSIF_THREAD_DEFAULT_SS      ((size_t)configMINIMAL_STACK_SIZE)
 
 
 /*============================================================================*
