@@ -606,7 +606,7 @@ OSIF_RESULT OSIF_MboxDelete(OSIF_MBOX* b)
  */
 int32_t OSIF_MboxPut(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 {
-    if (b == NULL || *b == NULL) {
+    if (b == NULL || *b == NULL || m == NULL) {
         return (osifERR_PARAM);
     }
 
@@ -645,7 +645,7 @@ int32_t OSIF_MboxPut(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
  */
 int32_t OSIF_MboxGet(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 {
-    if (b == NULL || *b == NULL) {
+    if (b == NULL || *b == NULL || m == NULL) {
         return (osifERR_PARAM);
     }
 
@@ -684,7 +684,7 @@ int32_t OSIF_MboxGet(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
  */
 int32_t OSIF_MboxPeek(OSIF_MBOX* b, void* m, uint32_t timeout_ms)
 {
-    if (b == NULL || *b == NULL) {
+    if (b == NULL || *b == NULL || m == NULL) {
         return (osifERR_PARAM);
     }
 
