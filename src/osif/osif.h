@@ -197,7 +197,7 @@ OSIF_RESULT    OSIF_MboxInvalid(OSIF_MBOX* b);
 OSIF_RESULT    OSIF_MutexCreate(OSIF_MUTEX* p, const char* name);
 OSIF_RESULT    OSIF_MutexDelete(OSIF_MUTEX* p);
 
-OSIF_RESULT    OSIF_MutexLock(OSIF_MUTEX* p);
+OSIF_RESULT    OSIF_MutexLock(OSIF_MUTEX* p, uint32_t timeout_ms);
 OSIF_RESULT    OSIF_MutexUnlock(OSIF_MUTEX* p);
 
 OSIF_RESULT    OSIF_MutexIsValid(OSIF_MUTEX* p);
@@ -275,8 +275,8 @@ OSIF_RESULT    OSIF_TimerInvalid(OSIF_TIMER* p);
  *
  * @{
  */
-void *         OSIF_MemAlloc(size_t size);
-void *         OSIF_MemAllocAligned(size_t size, uint8_t alignment);
+void*          OSIF_MemAlloc(size_t size);
+void*          OSIF_MemAllocAligned(size_t size, uint8_t alignment);
 OSIF_RESULT    OSIF_MemFree(void* p_block);
 OSIF_RESULT    OSIF_MemFreeAligned(void* p_block);
 

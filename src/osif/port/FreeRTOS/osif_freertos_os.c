@@ -870,14 +870,16 @@ OSIF_RESULT OSIF_MutexDelete(OSIF_MUTEX* p)
  *
  * @brief           Lock recursive mutex, wait forever to lock
  * @param[in]       p: Pointer to mutex structure
+ * @param[in]       timeout_ms: : The time in milliseconds to wait for the mutex to become
+ *                      available. When `OSIF_MAX_DELAY` is passed, wait for unlimited time
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
-OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX* p)
+OSIF_RESULT OSIF_MutexLock(OSIF_MUTEX* p, uint32_t timeout_ms)
 {
     if (p == NULL || *p == NULL) {
         return (osifERR_PARAM);
     } else {
-        return (xSemaphoreTakeRecursive(*p, portMAX_DELAY) == pdTRUE ? osifOK : osifERR);
+        return (xSemaphoreTakeRecursive(*p, timeout_ms == OSIF_MAX_DELAY ? portMAX_DELAY : pdMS_TO_TICKS(timeout_ms)) == pdTRUE ? osifOK : osifERR);
     }
 }
 /*============================================================================*/
