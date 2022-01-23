@@ -937,7 +937,6 @@ OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX* p)
 
 
 
-// TODO Rework binary semaphores to counting semaphores
 /**
  * @ingroup         OSIF_SEMAPHORE
  *
@@ -948,6 +947,8 @@ OSIF_RESULT OSIF_MutexInvalid(OSIF_MUTEX* p)
  * @param[in]       cnt: Count indicating default semaphore state:
  *                     `0`: Take semaphore token immediately
  *                     `1`: Keep token available
+ *                     Values greater than `1` create a counting semaphore,
+ *                     keeping token available
  * @return          `osifOK` on success, member of @ref OSIF_RESULT otherwise
  */
 OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE* p, const char* name, uint8_t cnt)
@@ -956,26 +957,28 @@ OSIF_RESULT OSIF_SemaphoreCreate(OSIF_SEMAPHORE* p, const char* name, uint8_t cn
         return (osifERR_PARAM);
     }
 
-    *p = xSemaphoreCreateBinary();
-    if (*p != NULL) {
-        if (cnt != 0) {
-            if (IS_IN_HANDLER_MODE()) {
-                BaseType_t task_woken = pdFALSE;
-                xSemaphoreTakeFromISR(*p, &task_woken);
-                portEND_SWITCHING_ISR(task_woken);
-            } else {
-                xSemaphoreTake(*p, portMAX_DELAY);
+    if (cnt < 1) {
+        *p = xSemaphoreCreateBinary();
+        if (*p != NULL) {
+            if (cnt == 1) {
+                if (IS_IN_HANDLER_MODE()) {
+                    BaseType_t task_woken = pdFALSE;
+                    xSemaphoreGiveFromISR(*p, &task_woken);
+                    portEND_SWITCHING_ISR(task_woken);
+                } else {
+                    xSemaphoreGive(*p);
+                }
             }
         }
+    } else {
+        xSemaphoreCreateCounting(cnt, cnt);
+    }
 
 #if OSIF_CFG_OS_DEBUG
-        vQueueAddToRegistry(*p, (const char*)name);
+    vQueueAddToRegistry(*p, (const char*)name);
 #endif /* OSIF_CFG_OS_DEBUG */
 
-        return (osifOK);
-    } else {
-        return (osifERR_MEM);
-    }
+    return (*p != NULL ? osifOK : osifERR_MEM);
 }
 /*============================================================================*/
 
